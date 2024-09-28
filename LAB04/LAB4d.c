@@ -54,6 +54,10 @@ int64* MergeSort(int64* arr, int length, int64* ret) {
 }
 
 int64 inversions(int n, int64* s){
+    if (n == 0) {
+        int64 ret = 0;
+        return ret;
+    }
     int64 ret = 0;
     int64* ptr = &ret;
     int64* sorted_array = MergeSort(s, n, ptr);
