@@ -23,58 +23,41 @@ void sort_papers(int n, int *p) {
     PrintList(B, topB);
     PrintList(C, topC);*/
 
-    for (int i = 1; i <= n; i++) {
-        /*printf("SEARCH FOR: %d\n", i);*/
-        if (locations[i] == 'A') {
-            while (A[topA-1] != i) {
-                //move(STACK_A, STACK_C);
-                count++;
-                C[topC++] = A[--topA];
-                locations[C[topC-1]] = 'C';
-                /*printf("A: "); PrintList(A, topA);
-                printf("B: "); PrintList(B, topB);
-                printf("C: "); PrintList(C, topC);*/
-            }
-            //move(STACK_A, STACK_B);
+    C[topC++] = A[--topA];
+    while (topA != 0) {
+        if (A[topA-1] > C[topC-1]) {
+            //move(STACK_A, STACK_C);
             count++;
-            B[topB++] = A[--topA];
-            locations[B[topB-1]] = 'B';
-            /*printf("B\n");
-            printf("A: "); PrintList(A, topA);
-            printf("B: "); PrintList(B, topB);
-            printf("C: "); PrintList(C, topC);*/
-        } else if (locations[i] == 'C') {
-            while (C[topC-1] != i) {
-                //move(STACK_C, STACK_A);
+            C[topC++] = A[--topA];
+            continue;
+        } else {
+            while (A[topA-1] < C[topC-1]) {
+                //move(STACK_C, STACK_B);
                 count++;
-                A[topA++] = C[--topC];
-                locations[A[topA-1]] = 'A';
-                /*printf("A: "); PrintList(A, topA);
-                printf("B: "); PrintList(B, topB);
-                printf("C: "); PrintList(C, topC);*/
+                B[topB++] = C[--topC];
             }
-            //move(STACK_C, STACK_B);
+            //move(STACK_A, STACK_C);
             count++;
-            B[topB++] = C[--topC];
-            locations[B[topB-1]] = 'B';
-            /*printf("A: "); PrintList(A, topA);
-            printf("B: "); PrintList(B, topB);
-            printf("C: "); PrintList(C, topC);*/
+            C[topC++] = A[--topA];
+            while (topB != 0) {
+                //move(STACK_B, STACK_C);
+                count++;
+                C[topC++] = B[--topB];
+            }
         }
     }
-
+    
     for (int i = 0; i < n; i++) {
-        //move(STACK_B, STACK_A);
+        //move(STACK_C, STACK_A);
         count++;
-        A[topA++] = B[--topB];
-        locations[A[topA-1]] = 'A';
+        A[topA++] = C[--topC];
     }
     PrintList(A, n);
-    printf("COUNT: %d\n", count);
+    printf("%d\n", count);
 }
 
 int main() {
-
+    //Comment
     int* p16A = (int*)malloc(16*sizeof(int));
     for (int i = 1; i <= 16; i++) {
         p16A[i-1] = i;
