@@ -1,20 +1,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void PrintList(long long int* arr, int length) {
+void PrintList(int* arr, int length) {
     if (length == 0) {
         printf("NULL\n");
         return;
     }
     
     for (int i = 0; i < length; i++) {
-        printf("%lld ", arr[i]);
+        printf("%d ", arr[i]);
     }
     printf("\n");
 }
 
 struct node{
-    int val;
+    char val;
     struct node* next;
 };
 struct node* BuildLinkedList(int* dataset, int length) {
@@ -41,7 +41,7 @@ void PrintLinkedList(struct node* head) {
     }
 
     while (head != NULL) {
-        printf("%d ", head->val);
+        printf("%c", head->val);
         head = head->next;
     }
     printf("\n");
@@ -136,5 +136,4 @@ void Pop(struct stack* s, int** x) {
 void PrintStack(struct stack* s) {
     PrintLinkedList(reverse(s->top));
 }
-
-
+//Comment
