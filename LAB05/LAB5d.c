@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+typedef struct node node;
+typedef struct deque deque;
+void deque_push_rear(deque* d, int64_t val);
+void deque_pop_rear(deque* d);
+void deque_pop_front(deque* d);
+
 typedef struct node {
     int64_t data;
     struct node* left;
