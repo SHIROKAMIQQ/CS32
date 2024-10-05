@@ -1,7 +1,4 @@
-//AC
-
 #include "deque.h"
-#include <stdio.h>
 #include <stdlib.h> 
 deque deque_init(void);
 void deque_push_left(deque *d, int64_t data);
@@ -31,11 +28,10 @@ int64_t deque_pop_left(deque *d){
     d->leftmost = d->leftmost->right;
     if (d->leftmost != NULL) {
         d->leftmost->left = NULL;
-    }
-    oj_free(to_free);
-    if (d->leftmost == NULL) {
+    } else {
         d->rightmost = NULL;
     }
+    oj_free(to_free);
     d->size--;
     return x;
 }
@@ -45,11 +41,10 @@ int64_t deque_pop_right(deque *d) {
     d->rightmost = d->rightmost->left;
     if (d->rightmost != NULL) {
         d->rightmost->right = NULL;
-    }
-    oj_free(to_free);
-    if (d->rightmost == NULL) {
+    } else {
         d->leftmost = NULL;
     }
+    oj_free(to_free);
     d->size--;
     return x; 
 }
