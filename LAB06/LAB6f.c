@@ -28,7 +28,7 @@ min_ready_array* mra_init(size_t n, int64_t* data) {
 int64_t mra_min_range(min_ready_array *a, idx_t i, idx_t j);
 
 int32_t mra_size(min_ready_array *a) {
-    if (a->root = NULL){return 0;}
+    if (a->root == NULL){return 0;}
     else{return 2*(a->root->ri) - 1;}
 }
 bool mra_empty(min_ready_array *a){
