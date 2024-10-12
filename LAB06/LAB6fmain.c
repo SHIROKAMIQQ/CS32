@@ -38,6 +38,13 @@ int main() {
     printf("mra_init: "); preorder_traversal(mra1->root); printf("\n");
     printf("Size: %d\n", mra_size(mra1));
     printf("Empty: %d\n", mra_empty(mra1));
+    printf("min[0,7): %ld\n", mra_min_range(mra1, 0, 7));
+    printf("min[2,6): %ld\n", mra_min_range(mra1, 2, 6));
+    printf("min[1,2): %ld\n", mra_min_range(mra1, 1, 2));
+    printf("min[1,3): %ld\n", mra_min_range(mra1, 1, 3));
+    printf("min[2,3): %ld\n", mra_min_range(mra1, 2, 3));
+    printf("min[2,4): %ld\n", mra_min_range(mra1, 2, 4));
+    printf("min[5,6): %ld\n", mra_min_range(mra1, 5, 6));
 
     printf("\n");
 
@@ -48,6 +55,10 @@ int main() {
     printf("mra_init: "); preorder_traversal(mra2->root); printf("\n");
     printf("Size: %d\n", mra_size(mra2));
     printf("Empty: %d\n", mra_empty(mra2));
+    printf("min[2,3): %ld\n", mra_min_range(mra2, 2, 3));
+    printf("min[1,2): %ld\n", mra_min_range(mra2, 1, 2));
+    printf("min[0,6): %ld\n", mra_min_range(mra2, 0, 6));
+    printf("min[2,5): %ld\n", mra_min_range(mra2, 2, 5));
 
     printf("\n");
 
