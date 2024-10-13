@@ -74,4 +74,19 @@ int main() {
     ph_push(ph1, 1);
     printf("PUSHED 1: "); print_list(ph1->vals->arr, ph_size(ph1));
     printf("SIZE: %d\n", ph_size(ph1));
+    printf("POP %ld: ", ph_pop_max(ph1)); print_list(ph1->vals->arr, ph_size(ph1));
+    printf("SIZE: %d\n", ph_size(ph1));
+    ph_push(ph1, 70);
+    printf("PUSHED 70: "); print_list(ph1->vals->arr, ph_size(ph1));
+    ph_push(ph1, 35);
+    printf("PUSHED 35: "); print_list(ph1->vals->arr, ph_size(ph1));
+    ph_push(ph1, 40);
+    printf("PUSHED 40: "); print_list(ph1->vals->arr, ph_size(ph1));
+    ph_push(ph1, 34);
+    printf("PUSHED 34: "); print_list(ph1->vals->arr, ph_size(ph1));
+    ph_push(ph1, 16);
+    printf("PUSHED 16: "); print_list(ph1->vals->arr, ph_size(ph1));
+
+    printf("POP %ld: ", ph_pop_max(ph1)); print_list(ph1->vals->arr, ph_size(ph1));
+    printf("POP %ld: ", ph_pop_max(ph1)); print_list(ph1->vals->arr, ph_size(ph1));
 }
