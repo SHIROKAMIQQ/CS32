@@ -88,5 +88,13 @@ int main() {
     printf("PUSHED 16: "); print_list(ph1->vals->arr, ph_size(ph1));
 
     printf("POP %ld: ", ph_pop_max(ph1)); print_list(ph1->vals->arr, ph_size(ph1));
+    printf("SIZE: %d\n", ph_size(ph1));
     printf("POP %ld: ", ph_pop_max(ph1)); print_list(ph1->vals->arr, ph_size(ph1));
+    printf("SIZE: %d\n", ph_size(ph1));
+
+
+    printf("PEEK_2ND: %ld\n", ph_peek_2nd_max(ph1));
+    printf("POP 2ND %ld: ", ph_pop_2nd_max(ph1)); print_list(ph1->vals->arr, ph_size(ph1));
+    printf("SIZE: %d\n", ph_size(ph1));
+
 }
