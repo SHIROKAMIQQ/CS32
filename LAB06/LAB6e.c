@@ -64,8 +64,20 @@ int64_t ph_pop_max(podium_heap *h){
     }
     return ret;
 }
-int64_t ph_peek_2nd_max(podium_heap *h);
-int64_t ph_pop_2nd_max(podium_heap *h);
+
+int64_t ph_peek_2nd_max(podium_heap *h){
+    int64_t temp1 = ph_pop_max(h);
+    int64_t ret = ph_peek_max(h);
+    ph_push(h, temp1);
+    return ret;
+}
+
+int64_t ph_pop_2nd_max(podium_heap *h) {
+    int64_t temp1 = ph_pop_max(h);
+    int64_t ret = ph_pop_max(h);
+    ph_push(h, temp1);
+    return ret;
+}
 int64_t ph_peek_3rd_max(podium_heap *h);
 int64_t ph_pop_3rd_max(podium_heap *h);
 int32_t ph_size(podium_heap *h) {
