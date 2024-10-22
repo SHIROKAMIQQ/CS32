@@ -12,6 +12,7 @@ typedef struct queue {
     struct queue_node* rear;
 } queue;
 
+void enqueue(queue* q, tree_node* t);
 void enqueue(queue* q, tree_node* t) {
     queue_node* newNode = (queue_node*)malloc(sizeof(queue_node));
     newNode->t = t;
@@ -27,6 +28,7 @@ void enqueue(queue* q, tree_node* t) {
     }
 }
 
+tree_node* dequeue(queue* q);
 tree_node* dequeue(queue* q) {
     queue_node* to_free = q->front;
     tree_node* to_pop = q->front->t;
@@ -40,28 +42,20 @@ tree_node* dequeue(queue* q) {
     return to_pop;
 }
 
-void helper(queue* parent_queue, queue* child_queue) {
-    while (parent_queue->front != NULL && parent_queue->rear != NULL) {
-        tree_node* parent = dequeue(parent_queue);
-        visit(parent);
-        ll_node* current_child = parent->children;
-        while (current_child != NULL) {
-            enqueue(child_queue, current_child->node);
-            current_child = current_child->next;
+void levelorder(tree_node *root){
+    queue* q = (queue*)malloc(sizeof(queue));
+    q->front = NULL;
+    q->rear = NULL;
+    enqueue(q, root);
+
+    while (q->front != NULL && q->rear != NULL) {
+        tree_node* p = dequeue(q);
+        visit(p);
+        ll_node* curr = p->children;
+        while (curr != NULL) {
+            enqueue(q, curr->node);
+            curr = curr->next;
         }
     }
-    helper(child_queue, parent_queue);
-}
 
-void levelorder(tree_node *root){
-    queue* parent_queue = (queue*)malloc(sizeof(queue));
-    parent_queue->front = NULL;
-    parent_queue->rear = NULL;
-    enqueue(parent_queue, root);
-    
-    queue* child_queue = (queue*)malloc(sizeof(queue));
-    child_queue->front = NULL;
-    child_queue->rear = NULL;
-    
-    helper(parent_queue, child_queue);
 }
