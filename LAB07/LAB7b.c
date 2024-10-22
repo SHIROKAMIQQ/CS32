@@ -1,50 +1,67 @@
 #include "level_order.h"
 #include <stdlib.h>
 
-typedef struct stack {
-    ll_node* top;
-} Stack;
+typedef struct queue_node {
+    tree_node* t;
+    struct queue_node* left;
+    struct queue_node* right;
+} queue_node;
 
-void helper(Stack* parent_stack, Stack* child_stack);
-void helper(Stack* parent_stack, Stack* child_stack) {
-    if (parent_stack->top == NULL) {return;}
+typedef struct queue {
+    struct queue_node* front;
+    struct queue_node* rear;
+} queue;
 
-    while (parent_stack->top != NULL) {
-        visit(parent_stack->top->node);
+void enqueue(queue* q, tree_node* t) {
+    queue_node* newNode = (queue_node*)malloc(sizeof(queue_node));
+    newNode->t = t;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    if (q->front == NULL && q->rear == NULL) {
+        q->front = newNode;
+        q->rear = newNode;
+    } else {
+        newNode->left = q->rear;
+        q->rear->right = newNode;
+        q->rear = q->rear->right;
+    }
+}
 
-        ll_node* current_child = parent_stack->top->node->children;
+tree_node* dequeue(queue* q) {
+    queue_node* to_free = q->front;
+    tree_node* to_pop = q->front->t;
+    q->front = q->front->right;
+    if (q->front != NULL) {
+        q->front->left = NULL;
+    } else {
+        q->rear = NULL;
+    }
+    free(to_free);
+    return to_pop;
+}
+
+void helper(queue* parent_queue, queue* child_queue) {
+    while (parent_queue->front != NULL && parent_queue->rear != NULL) {
+        tree_node* parent = dequeue(parent_queue);
+        visit(parent);
+        ll_node* current_child = parent->children;
         while (current_child != NULL) {
-            ll_node* ch = (ll_node*)malloc(sizeof(ll_node));
-            ch->node = current_child->node;
-            ch->next = child_stack->top;
-            child_stack->top = ch;
+            enqueue(child_queue, current_child->node);
             current_child = current_child->next;
         }
-
-        parent_stack->top = parent_stack->top->next;
     }
-
-    while (child_stack->top != NULL) {
-        ll_node* temp = child_stack->top;
-        child_stack->top = child_stack->top->next;
-        temp->next = parent_stack->top;
-        parent_stack->top = temp;
-    }
-
-    helper(parent_stack, child_stack);
+    helper(child_queue, parent_queue);
 }
 
 void levelorder(tree_node *root){
-    Stack* parent_stack = (Stack*)malloc(sizeof(Stack));
-    parent_stack->top = NULL;
-
-    ll_node* ll_root = (ll_node*)malloc(sizeof(ll_node));
-    ll_root->node = root;
-    ll_root->next = NULL;
-    parent_stack->top = ll_root;
-
-    Stack* child_stack = (Stack*)malloc(sizeof(Stack));
-    child_stack->top = NULL;
-
-    helper(parent_stack, child_stack);
+    queue* parent_queue = (queue*)malloc(sizeof(queue));
+    parent_queue->front = NULL;
+    parent_queue->rear = NULL;
+    enqueue(parent_queue, root);
+    
+    queue* child_queue = (queue*)malloc(sizeof(queue));
+    child_queue->front = NULL;
+    child_queue->rear = NULL;
+    
+    helper(parent_queue, child_queue);
 }
