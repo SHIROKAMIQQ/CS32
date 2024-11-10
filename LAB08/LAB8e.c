@@ -1,7 +1,6 @@
 #include "friends.h"
 #include <stdlib.h>
 
-
 typedef struct tuple {
     int idx;
     int fs;
@@ -15,6 +14,11 @@ tuple* make_tuples(int n, int* f) {
     }
     return ret;
 }
+
+typedef struct ll_node{
+    int val;
+    struct ll_node* next;
+}ll_node;
 
 void merge(tuple* arr, int left, int mid, int right) {
     int n1 = mid - left + 1;
@@ -45,4 +49,44 @@ void merge_sort(tuple* arr, int left, int right) {
 friends* guess_friends(int n, int* f) {
     tuple* idxfs = make_tuples(n, f);
     merge_sort(idxfs, 0, n-1);
+
+    ll_node** ll_pairs = (ll_node**)malloc(n*sizeof(ll_pairs));
+    for (int i = 0; i < n; i++) {ll_pairs[i] = NULL;}
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        int j = i+1;
+        while (idxfs[i].fs > 0 && j < n){
+            if (idxfs[j].fs > 0) {
+                ll_node* newNode = (ll_node*)malloc(sizeof(ll_node));
+                newNode->val = idxfs[j].idx;
+                newNode->next = ll_pairs[idxfs[i].idx];
+                ll_pairs[idxfs[i].idx] = newNode;
+                (idxfs[j].fs)--;
+                (idxfs[i].fs)--;
+                count++;
+            }
+            j++;
+        }
+    }
+
+    friend_pair* pairs = (friend_pair*)malloc(count*sizeof(friend_pair));
+    int fp = 0;
+    for (int i = 0; i < n; i++) {
+        if (idxfs[i].fs != 0) {
+            count = -1;
+            break;
+        }
+        while(ll_pairs[idxfs[i].idx] != NULL) {
+            friend_pair newPair;
+            newPair.person1 = idxfs[i].idx;
+            newPair.person2 = ll_pairs[idxfs[i].idx]->val;
+            pairs[fp++] = newPair;
+            ll_pairs[idxfs[i].idx] = ll_pairs[idxfs[i].idx]->next;
+        }
+    }
+    
+    friends* ret = (friends*)malloc(sizeof(friends));
+    ret->count = count;
+    ret->pairs = pairs;
+    return ret;
 }
