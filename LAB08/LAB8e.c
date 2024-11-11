@@ -67,6 +67,7 @@ friends* guess_friends(int n, int* f) {
             }
             j++;
         }
+        merge_sort(idxfs, i+1, n-1);
     }
 
     friend_pair* pairs = (friend_pair*)malloc(count*sizeof(friend_pair));
